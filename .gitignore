@@ -1,0 +1,17 @@
+# Backend
+backend/node_modules/
+backend/.env
+backend/*.log
+
+# Frontend
+frontend/node_modules/
+frontend/.env
+frontend/.env.local
+frontend/dist/
+frontend/build/
+frontend/*.log
+
+# General
+.DS_Store
+*.swp
+*.swo
