@@ -5,18 +5,22 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon src/index.js",
-    "start":"node src/index.js"
+    "start": "node src/index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "bullmq": "^5.66.5",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
+    "ioredis": "^5.9.2",
     "morgan": "^1.10.1",
-    "pg": "^8.16.3"
+    "node-cron": "^4.2.1",
+    "pg": "^8.16.3",
+    "puppeteer": "^24.35.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.11"

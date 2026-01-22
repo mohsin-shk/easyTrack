@@ -1,16 +1,7 @@
 import { pool } from "../config/db.js";
 import { detectPlatform } from "../utils/platformDetector.js";
+import { scrapeAmazonProduct } from "./amazonScraper.js";
 
-// TEMPORARY MOCK SCRAPER (we will replace this later)
-const mockScrapeProduct = async (url, platform) => {
-  return {
-    name: "Mock Product (Replace later)",
-    image_url: "https://example.com/mock.jpg",
-    rating: 4.2,
-    price: 45999,
-    currency: "INR",
-  };
-};
 
 export const trackProductService = async (url) => {
   // 1) Detect platform
@@ -33,21 +24,27 @@ export const trackProductService = async (url) => {
     };
   }
 
-  // 3) Scrape product data (mock for now)
-  const productData = await mockScrapeProduct(url, platform);
+  let productData;
+
+  if (platform === "amazon") {
+    productData = await scrapeAmazonProduct(url);
+  } else {
+    throw new Error("Flipkart scraper not implemented yet");
+  }
 
   // 4) Insert into products table
   const productResult = await pool.query(
     `INSERT INTO products 
-      (platform, url, name, image_url, rating)
-     VALUES ($1, $2, $3, $4, $5)
-     RETURNING id`,
+      (platform, url, name, image_url, rating, description)
+    VALUES ($1, $2, $3, $4, $5, $6)
+    RETURNING id`,
     [
       platform,
       url,
       productData.name,
       productData.image_url,
       productData.rating,
+      productData.description,
     ]
   );
 
